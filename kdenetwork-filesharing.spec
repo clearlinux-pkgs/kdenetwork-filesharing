@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : kdenetwork-filesharing
-Version  : 20.08.3
-Release  : 24
-URL      : https://download.kde.org/stable/release-service/20.08.3/src/kdenetwork-filesharing-20.08.3.tar.xz
-Source0  : https://download.kde.org/stable/release-service/20.08.3/src/kdenetwork-filesharing-20.08.3.tar.xz
-Source1  : https://download.kde.org/stable/release-service/20.08.3/src/kdenetwork-filesharing-20.08.3.tar.xz.sig
+Version  : 20.12.0
+Release  : 25
+URL      : https://download.kde.org/stable/release-service/20.12.0/src/kdenetwork-filesharing-20.12.0.tar.xz
+Source0  : https://download.kde.org/stable/release-service/20.12.0/src/kdenetwork-filesharing-20.12.0.tar.xz
+Source1  : https://download.kde.org/stable/release-service/20.12.0/src/kdenetwork-filesharing-20.12.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GFDL-1.2 GPL-2.0 LGPL-2.1
+License  : GPL-2.0 GPL-3.0
 Requires: kdenetwork-filesharing-data = %{version}-%{release}
 Requires: kdenetwork-filesharing-lib = %{version}-%{release}
 Requires: kdenetwork-filesharing-license = %{version}-%{release}
@@ -59,15 +59,15 @@ locales components for the kdenetwork-filesharing package.
 
 
 %prep
-%setup -q -n kdenetwork-filesharing-20.08.3
-cd %{_builddir}/kdenetwork-filesharing-20.08.3
+%setup -q -n kdenetwork-filesharing-20.12.0
+cd %{_builddir}/kdenetwork-filesharing-20.12.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604600217
+export SOURCE_DATE_EPOCH=1607714521
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -83,12 +83,14 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1604600217
+export SOURCE_DATE_EPOCH=1607714521
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing
-cp %{_builddir}/kdenetwork-filesharing-20.08.3/COPYING %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/3860f7708aae6a8ddfe8483263b2a5f29b83c975
-cp %{_builddir}/kdenetwork-filesharing-20.08.3/COPYING.DOC %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/bd75d59f9d7d9731bfabdc48ecd19e704d218e38
-cp %{_builddir}/kdenetwork-filesharing-20.08.3/COPYING.LIB %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/9a1929f4700d2407c70b507b3b2aaf6226a9543c
+cp %{_builddir}/kdenetwork-filesharing-20.12.0/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/2a638514c87c4923c0570c55822620fad56f2a33
+cp %{_builddir}/kdenetwork-filesharing-20.12.0/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e712eadfab0d2357c0f50f599ef35ee0d87534cb
+cp %{_builddir}/kdenetwork-filesharing-20.12.0/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/6091db0aead0d90182b93d3c0d09ba93d188f907
+cp %{_builddir}/kdenetwork-filesharing-20.12.0/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275
+cp %{_builddir}/kdenetwork-filesharing-20.12.0/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275
 pushd clr-build
 %make_install
 popd
@@ -96,11 +98,15 @@ popd
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/libexec/kauth/authhelper
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/dbus-1/system-services/org.kde.filesharing.samba.service
+/usr/share/dbus-1/system.d/org.kde.filesharing.samba.conf
 /usr/share/kservices5/sambausershareplugin.desktop
 /usr/share/metainfo/org.kde.kdenetwork-filesharing.metainfo.xml
+/usr/share/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %files lib
 %defattr(-,root,root,-)
@@ -108,9 +114,10 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/kdenetwork-filesharing/3860f7708aae6a8ddfe8483263b2a5f29b83c975
-/usr/share/package-licenses/kdenetwork-filesharing/9a1929f4700d2407c70b507b3b2aaf6226a9543c
-/usr/share/package-licenses/kdenetwork-filesharing/bd75d59f9d7d9731bfabdc48ecd19e704d218e38
+/usr/share/package-licenses/kdenetwork-filesharing/2a638514c87c4923c0570c55822620fad56f2a33
+/usr/share/package-licenses/kdenetwork-filesharing/6091db0aead0d90182b93d3c0d09ba93d188f907
+/usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275
+/usr/share/package-licenses/kdenetwork-filesharing/e712eadfab0d2357c0f50f599ef35ee0d87534cb
 
 %files locales -f kfileshare.lang
 %defattr(-,root,root,-)
