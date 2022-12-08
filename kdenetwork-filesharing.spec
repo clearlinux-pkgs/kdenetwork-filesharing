@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : kdenetwork-filesharing
-Version  : 22.08.3
-Release  : 45
-URL      : https://download.kde.org/stable/release-service/22.08.3/src/kdenetwork-filesharing-22.08.3.tar.xz
-Source0  : https://download.kde.org/stable/release-service/22.08.3/src/kdenetwork-filesharing-22.08.3.tar.xz
-Source1  : https://download.kde.org/stable/release-service/22.08.3/src/kdenetwork-filesharing-22.08.3.tar.xz.sig
+Version  : 22.12.0
+Release  : 46
+URL      : https://download.kde.org/stable/release-service/22.12.0/src/kdenetwork-filesharing-22.12.0.tar.xz
+Source0  : https://download.kde.org/stable/release-service/22.12.0/src/kdenetwork-filesharing-22.12.0.tar.xz
+Source1  : https://download.kde.org/stable/release-service/22.12.0/src/kdenetwork-filesharing-22.12.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : GPL-2.0 GPL-3.0
+License  : BSD-3-Clause CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
 Requires: kdenetwork-filesharing-data = %{version}-%{release}
 Requires: kdenetwork-filesharing-lib = %{version}-%{release}
 Requires: kdenetwork-filesharing-license = %{version}-%{release}
@@ -22,7 +22,13 @@ BuildRequires : buildreq-kde
 BuildRequires : extra-cmake-modules-data
 
 %description
-No detailed description available
+<!--
+SPDX-License-Identifier: CC0-1.0
+-->
+# Requirements
+- samba or windows server
+- samba server needs to share off of a file system with POSIX ACLs enabled.
+e.g. btrfs, or ext4 with acl enabled. also see https://help.ubuntu.com/community/FilePermissionsACLs
 
 %package data
 Summary: data components for the kdenetwork-filesharing package.
@@ -59,15 +65,15 @@ locales components for the kdenetwork-filesharing package.
 
 
 %prep
-%setup -q -n kdenetwork-filesharing-22.08.3
-cd %{_builddir}/kdenetwork-filesharing-22.08.3
+%setup -q -n kdenetwork-filesharing-22.12.0
+cd %{_builddir}/kdenetwork-filesharing-22.12.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1667883502
+export SOURCE_DATE_EPOCH=1670539296
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -83,14 +89,21 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1667883502
+export SOURCE_DATE_EPOCH=1670539296
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/BSD-3-Clause.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/3630f1ffcec0e075bf446b88c7b507b1287b571d || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/CC0-1.0.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/82da472f6d00dc5f0a651f33ebb320aa9c7b08d0 || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/GPL-2.0-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/2a638514c87c4923c0570c55822620fad56f2a33 || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e712eadfab0d2357c0f50f599ef35ee0d87534cb || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/GPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/6091db0aead0d90182b93d3c0d09ba93d188f907 || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LGPL-2.1-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/fa05e58320cb7c64786b26396f4b992579a628bc || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LGPL-3.0-only.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/0b71159e19bef95069e18d17296291916e89b5cd || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275 || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-GPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275 || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-LGPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e458941548e0864907e654fa2e192844ae90fc32 || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-LGPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e458941548e0864907e654fa2e192844ae90fc32 || :
+cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/adadb67a9875aeeac285309f1eab6e47d9ee08a7 || :
 pushd clr-build
 %make_install
 popd
@@ -109,14 +122,21 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/qt5/plugins/kf5/propertiesdialog/SambaAcl.so
 /usr/lib64/qt5/plugins/kf5/propertiesdialog/sambausershareplugin.so
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/kdenetwork-filesharing/0b71159e19bef95069e18d17296291916e89b5cd
 /usr/share/package-licenses/kdenetwork-filesharing/2a638514c87c4923c0570c55822620fad56f2a33
+/usr/share/package-licenses/kdenetwork-filesharing/3630f1ffcec0e075bf446b88c7b507b1287b571d
 /usr/share/package-licenses/kdenetwork-filesharing/6091db0aead0d90182b93d3c0d09ba93d188f907
 /usr/share/package-licenses/kdenetwork-filesharing/7d9831e05094ce723947d729c2a46a09d6e90275
+/usr/share/package-licenses/kdenetwork-filesharing/82da472f6d00dc5f0a651f33ebb320aa9c7b08d0
+/usr/share/package-licenses/kdenetwork-filesharing/adadb67a9875aeeac285309f1eab6e47d9ee08a7
+/usr/share/package-licenses/kdenetwork-filesharing/e458941548e0864907e654fa2e192844ae90fc32
 /usr/share/package-licenses/kdenetwork-filesharing/e712eadfab0d2357c0f50f599ef35ee0d87534cb
+/usr/share/package-licenses/kdenetwork-filesharing/fa05e58320cb7c64786b26396f4b992579a628bc
 
 %files locales -f kfileshare.lang
 %defattr(-,root,root,-)
