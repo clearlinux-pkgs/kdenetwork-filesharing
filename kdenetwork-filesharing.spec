@@ -6,11 +6,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : kdenetwork-filesharing
-Version  : 23.04.0
-Release  : 51
-URL      : https://download.kde.org/stable/release-service/23.04.0/src/kdenetwork-filesharing-23.04.0.tar.xz
-Source0  : https://download.kde.org/stable/release-service/23.04.0/src/kdenetwork-filesharing-23.04.0.tar.xz
-Source1  : https://download.kde.org/stable/release-service/23.04.0/src/kdenetwork-filesharing-23.04.0.tar.xz.sig
+Version  : 23.04.1
+Release  : 52
+URL      : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
@@ -70,31 +70,48 @@ locales components for the kdenetwork-filesharing package.
 
 
 %prep
-%setup -q -n kdenetwork-filesharing-23.04.0
-cd %{_builddir}/kdenetwork-filesharing-23.04.0
+%setup -q -n kdenetwork-filesharing-23.04.1
+cd %{_builddir}/kdenetwork-filesharing-23.04.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682118905
+export SOURCE_DATE_EPOCH=1684810784
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1682118905
+export SOURCE_DATE_EPOCH=1684810784
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/BSD-3-Clause.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/3630f1ffcec0e075bf446b88c7b507b1287b571d || :
@@ -109,13 +126,18 @@ cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accept
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-LGPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e458941548e0864907e654fa2e192844ae90fc32 || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/LicenseRef-KDE-Accepted-LGPL.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/e458941548e0864907e654fa2e192844ae90fc32 || :
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/MIT.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/adadb67a9875aeeac285309f1eab6e47d9ee08a7 || :
+pushd clr-build-avx2
+%make_install_v3  || :
+popd
 pushd clr-build
 %make_install
 popd
 %find_lang kfileshare
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
+/V3/usr/lib64/libexec/kauth/authhelper
 /usr/lib64/libexec/kauth/authhelper
 
 %files data
@@ -127,6 +149,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/qt5/plugins/kf5/propertiesdialog/SambaAcl.so
+/V3/usr/lib64/qt5/plugins/kf5/propertiesdialog/sambausershareplugin.so
 /usr/lib64/qt5/plugins/kf5/propertiesdialog/SambaAcl.so
 /usr/lib64/qt5/plugins/kf5/propertiesdialog/sambausershareplugin.so
 
