@@ -6,11 +6,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : kdenetwork-filesharing
-Version  : 23.04.1
-Release  : 53
-URL      : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz
-Source0  : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz
-Source1  : https://download.kde.org/stable/release-service/23.04.1/src/kdenetwork-filesharing-23.04.1.tar.xz.sig
+Version  : 23.04.2
+Release  : 54
+URL      : https://download.kde.org/stable/release-service/23.04.2/src/kdenetwork-filesharing-23.04.2.tar.xz
+Source0  : https://download.kde.org/stable/release-service/23.04.2/src/kdenetwork-filesharing-23.04.2.tar.xz
+Source1  : https://download.kde.org/stable/release-service/23.04.2/src/kdenetwork-filesharing-23.04.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
@@ -70,15 +70,15 @@ locales components for the kdenetwork-filesharing package.
 
 
 %prep
-%setup -q -n kdenetwork-filesharing-23.04.1
-cd %{_builddir}/kdenetwork-filesharing-23.04.1
+%setup -q -n kdenetwork-filesharing-23.04.2
+cd %{_builddir}/kdenetwork-filesharing-23.04.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685570563
+export SOURCE_DATE_EPOCH=1686533066
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -111,7 +111,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1685570563
+export SOURCE_DATE_EPOCH=1686533066
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing
 cp %{_builddir}/kdenetwork-filesharing-%{version}/LICENSES/BSD-3-Clause.txt %{buildroot}/usr/share/package-licenses/kdenetwork-filesharing/3630f1ffcec0e075bf446b88c7b507b1287b571d || :
